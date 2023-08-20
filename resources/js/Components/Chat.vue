@@ -15,8 +15,9 @@
         <div class="text-field">
             <textarea
                 rows="1"
-                v-model="message"
                 placeholder="Введите сообщение..."
+                v-model="message"
+                @keydown.enter.exact.prevent="sendMessage"
                 @input="resizeTextarea"
             ></textarea>
             <button @click="sendMessage">S</button>
@@ -147,6 +148,10 @@ function resizeTextarea(event) {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+}
+
+.chat p {
+    white-space: pre-line;
 }
 
 .text-field {
