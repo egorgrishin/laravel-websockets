@@ -111,7 +111,9 @@ const getDialogChannelName = (userId) => {
 const setChatScroll = () => {
     setTimeout(() => {
         const chat = document.getElementById('chat');
-        chat.scrollTop = chat.scrollHeight;
+        if (chat) {
+            chat.scrollTop = chat.scrollHeight;
+        }
     }, 25);
 };
 
