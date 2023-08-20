@@ -6,6 +6,7 @@
             type="text"
             placeholder="Введите имя"
             v-model="nick"
+            @keyup.enter="login"
         />
         <input
             class="login-button"
