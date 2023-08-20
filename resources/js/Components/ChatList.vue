@@ -31,13 +31,22 @@ const emit = defineEmits(['selectUser']);
 const selectedUser = ref(null);
 
 const id = localStorage.getItem('id');
-const currentUser = computed(() => users.value.find(user => user.id === id));
-const otherUsers = computed(() => users.value.filter(user => user.id !== id));
+const currentUser = computed(() => {
+    const user = users.value.find(user => user.id === id);
+    if (user) {
+        user.nickname = decodeURIComponent(user.nickname);
+    }
+    return user;
+});
+const otherUsers = computed(() => users.value
+    .filter(user => user.id !== id)
+    .map(user => {
+        user.nickname = decodeURIComponent(user.nickname);
+        return user;
+    })
+);
 
-const selectUser = (user) => {
-    selectedUser.value = user;
-    emit('selectUser', user);
-}
+const selectUser = (userId) => selectedUserId.value = userId;
 </script>
 
 <style scoped>

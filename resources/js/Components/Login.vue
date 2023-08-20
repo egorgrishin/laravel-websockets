@@ -24,9 +24,6 @@ const nick = ref('');
 
 const login = () => {
     localStorage.setItem('nick', nick.value);
-    Echo.options.auth.headers.id = localStorage.getItem('id');
-    Echo.options.auth.headers.nickname = nick.value;
-
     emit('join')
 }
 
