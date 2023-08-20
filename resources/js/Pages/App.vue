@@ -4,18 +4,15 @@
         <Login @join="joinToChannel"/>
     </div>
     <div v-else class="messenger full-page">
-        <ChatList v-model:users="users"/>
-        <Dialog/>
-
+        <Messenger v-model:users="users"/>
     </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
-import ChatList from "../Components/ChatList.vue";
-import Dialog from "../Components/Dialog.vue";
 import Login from "../Components/Login.vue";
 import Header from "../Components/Header.vue";
+import Messenger from "../Components/Messenger.vue";
 
 const users = ref([]);
 const nick = ref(localStorage.getItem('nick') ?? '');
@@ -24,7 +21,10 @@ const isLogged = computed(() => {
     return Boolean(nick.value);
 });
 
+// Подключает к каналу онлайн пользователей
 const joinToChannel = () => nick.value = localStorage.getItem('nick');
+
+// Обрабатывает подключение и отключение от канала онлайн пользователей
 const channelHandler = () => {
     Echo.options.auth.headers.id = localStorage.getItem('id');
     Echo.options.auth.headers.nickname = nick.value;
@@ -32,6 +32,7 @@ const channelHandler = () => {
         Echo.leave('online');
         return;
     }
+    // noinspection JSUnresolvedReference
     Echo.join('online')
         .here(onlineUsers => users.value = onlineUsers)
         .joining(user => users.value.push(user))

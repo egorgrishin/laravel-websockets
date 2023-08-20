@@ -3,7 +3,6 @@
         <div class="current-user">
             <span>{{ currentUser?.nickname }}</span>
         </div>
-
         <ul>
             <li
                 class="user-list__user"
@@ -14,48 +13,30 @@
             >
                 <span>{{ user.nickname }}</span>
             </li>
+            <li class="user-list__user" v-if="!otherUsers.length">
+                <span class="empty-online">Пользователей в сети сейчас нет</span>
+            </li>
         </ul>
     </div>
 </template>
 
 <script setup>
-import {computed, ref, toRefs, watch} from "vue";
+import { computed, ref, toRefs } from "vue";
 
 const props = defineProps({
     users: Array
 })
 const { users } = toRefs(props);
-watch(users, (n) => console.log(n));
 const emit = defineEmits(['selectUser']);
 const selectedUser = ref(null);
 
 const id = localStorage.getItem('id');
-const currentUser = computed(() => {
-    // console.log(users.value);
-    return users.value.find(user => user.id === id)
-});
+const currentUser = computed(() => users.value.find(user => user.id === id));
 const otherUsers = computed(() => users.value.filter(user => user.id !== id));
-// const otherUsers = [
-//     {id: 1, nickname: "Name 1 Surname"},
-//     {id: 2,nickname: "Name 2 Surname"},
-//     {id: 3,nickname: "Name 3 Surname"},
-//     {id: 4,nickname: "Name 4 Surname"},
-//     {id: 5,nickname: "Name 5 Surname"},
-//     {id: 6,nickname: "Name 6 Surname"},
-//     {id: 7,nickname: "Name 7 Surname"},
-//     {id: 8,nickname: "Name 8 Surname"},
-//     {id: 9,nickname: "Name 1 Surname"},
-//     {id: 10,nickname: "Name 2 Surname"},
-//     {id: 11,nickname: "Name 3 Surname"},
-//     {id: 12,nickname: "Name 4 Surname"},
-//     {id: 13,nickname: "Name 5 Surname"},
-//     {id: 14,nickname: "Name 6 Surname"},
-//     {id: 15,nickname: "Name 7 Surname"},
-//     {id: 16,nickname: "Name 8 Surname"},
-// ];
 
-const selectUser = (userId) => {
-    selectedUser.value = userId;
+const selectUser = (user) => {
+    selectedUser.value = user;
+    emit('selectUser', user);
 }
 </script>
 
@@ -97,6 +78,11 @@ const selectUser = (userId) => {
 }
 
 .selected {
-    background: #eee;
+    font-weight: 700;
+}
+
+.empty-online {
+    font-weight: 200;
+    font-style: italic;
 }
 </style>
