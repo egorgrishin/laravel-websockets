@@ -13,4 +13,7 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('test', fn () => true);
+Broadcast::channel('online', fn (object $request) => [
+    'id'       => $request->id,
+    'nickname' => $request->nickname,
+]);

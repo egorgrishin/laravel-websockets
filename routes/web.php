@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,4 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/users/show', [UserController::class, 'show']);
-
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', fn () => Inertia::render('App'));

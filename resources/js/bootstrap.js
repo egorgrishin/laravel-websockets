@@ -28,9 +28,9 @@ window.Echo = new Echo({
     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
+    auth: { headers: {} },
 });
 
-window.Echo.channel('test')
-    .listen('.test-event', (e) => {
-        console.log(e);
-    });
+if (!localStorage.getItem('id')) {
+    localStorage.setItem('id', Math.floor(Math.random() * 10 ** 10).toString());
+}
