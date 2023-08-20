@@ -9,7 +9,7 @@
                 :class="{ selected: user.id === selectedUser?.id }"
                 v-for="user of otherUsers"
                 :key="user.id"
-                @click="selectUser(user)"
+                @click="selectUser(user.id)"
             >
                 <span>{{ user.nickname }}</span>
             </li>
@@ -28,7 +28,12 @@ const props = defineProps({
 })
 const { users } = toRefs(props);
 const emit = defineEmits(['selectUser']);
-const selectedUser = ref(null);
+const selectedUserId = ref(null);
+const selectedUser = computed(() => {
+    const user = otherUsers.value.find(user => user.id === selectedUserId.value);
+    emit('selectUser', user);
+    return user;
+});
 
 const id = localStorage.getItem('id');
 const currentUser = computed(() => {

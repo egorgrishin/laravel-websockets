@@ -29,7 +29,7 @@ const channelHandler = () => {
     Echo.options.auth.headers.id = localStorage.getItem('id');
     Echo.options.auth.headers.nickname = encodeURIComponent(nick.value);
     if (!Boolean(nick.value)) {
-        Echo.leave('online');
+        Echo.leaveAllChannels();
         return;
     }
     // noinspection JSUnresolvedReference
