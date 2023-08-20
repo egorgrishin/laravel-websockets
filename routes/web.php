@@ -15,3 +15,4 @@ use Inertia\Inertia;
 */
 
 Route::get('/', fn () => Inertia::render('App'));
+Route::get('/{any}', fn () => redirect('/'))->where('any', '.*');

@@ -8,20 +8,18 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
-     * Define the application's command schedule.
+     * Определяет команды для планировщика задач
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        //
     }
 
     /**
-     * Register the commands for the application.
+     * Регистрирует консольные команды для приложения
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
-
-        require base_path('routes/console.php');
+        $this->load(__DIR__ . '/Commands');
     }
 }
